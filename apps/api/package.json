@@ -1,0 +1,19 @@
+{
+  "name": "@testrepo/api",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Express + SQLite CRUD API for products.",
+  "type": "module",
+  "main": "src/server.js",
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "scripts": {
+    "start": "node --disable-warning=ExperimentalWarning --env-file-if-exists=.env src/server.js",
+    "dev": "node --disable-warning=ExperimentalWarning --env-file-if-exists=.env --watch src/server.js"
+  },
+  "dependencies": {
+    "cors": "2.8.6",
+    "express": "5.2.1"
+  }
+}
