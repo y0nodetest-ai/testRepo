@@ -18,6 +18,7 @@
     "smoke": "node --disable-warning=ExperimentalWarning scripts/smoke.mjs",
     "test": "node --test --disable-warning=ExperimentalWarning \"apps/api/test/**/*.test.js\"",
     "test:http": "node --test --disable-warning=ExperimentalWarning \"apps/api/test-http/**/*.test.js\"",
-    "test:all": "npm run test && npm run test:http"
+    "test:all": "npm run test && npm run test:http",
+    "test:agent": "node --test --test-reporter=dot --disable-warning=ExperimentalWarning \"apps/api/test/**/*.test.js\""
   }
 }

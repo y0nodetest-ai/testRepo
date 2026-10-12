@@ -5,8 +5,23 @@
 # - so the suite runs in the agent's scratch clone, where dependencies are
 # never installed. apps/api/test-http/ needs express and is excluded for that
 # reason; run it locally with `npm run test:http`.
+# Two deliberate choices in this command:
+#
+#   --test-reporter=dot   The default spec reporter prints a line per test, so
+#                         130 passing tests cost ~8,500 characters (~2,100
+#                         tokens) and that lands in the agent's transcript on
+#                         every run. Dot prints one character per test: 144
+#                         characters green, and it still names failing tests,
+#                         which is all the baseline comparison and the
+#                         fail-to-pass check actually read.
+#
+#   raw `node --test`     Not `npm test`. nameFilterFlag() in repo/tests.ts
+#                         matches /node\s+--test/ to pick
+#                         --test-name-pattern; behind an npm script it falls
+#                         back to `-t`, which npm does not understand, and
+#                         single-test flake discrimination breaks.
 tests:
-  command: npm test
+  command: node --test --test-reporter=dot --disable-warning=ExperimentalWarning "apps/api/test/**/*.test.js"
   directory: apps/api/test
 
 # The real root build is `tsc --noEmit && vite build`, which needs node_modules.
