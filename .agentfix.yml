@@ -1,0 +1,17 @@
+# Overrides for the AI Issue Fixer agent.
+
+# `npm test` covers apps/api/test/ only. Those files import nothing outside the
+# Node standard library - validation.js is pure, and db.js builds on node:sqlite
+# - so the suite runs in the agent's scratch clone, where dependencies are
+# never installed. apps/api/test-http/ needs express and is excluded for that
+# reason; run it locally with `npm run test:http`.
+tests:
+  command: npm test
+  directory: apps/api/test
+
+# The real root build is `tsc --noEmit && vite build`, which needs node_modules.
+# The agent is forbidden from running package installs, so that build can never
+# succeed in its workspace, and a non-zero build exit is a hard failure in the
+# validation gate. Point it at a no-op so the gate judges the diff on its merits.
+build:
+  command: node --version
